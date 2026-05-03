@@ -1,14 +1,19 @@
 import { Users, FileWarning, CheckCircle, Clock } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-const recentAssessments = [
-  { id: 'KC-8923', date: '2026-05-02', status: 'Approved', store: 'Sri Venkateshwara Stores', location: 'Bengaluru, KA', amount: '₹3,50,000' },
-  { id: 'KC-8924', date: '2026-05-02', status: 'Flagged', store: 'Laxmi Provision', location: 'Chennai, TN', amount: '-' },
-  { id: 'KC-8925', date: '2026-05-02', status: 'Pending', store: 'New Delhi General', location: 'New Delhi, DL', amount: '₹1,20,000' },
-  { id: 'KC-8926', date: '2026-05-01', status: 'Approved', store: 'Royal Mart', location: 'Hyderabad, TS', amount: '₹4,00,000' },
-];
+import { Link, useNavigate } from 'react-router-dom';
+import { mockAssessments } from '../data/mockAssessments';
+import { useAssessment } from '../context/AssessmentContext';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  const { setAssessmentData } = useAssessment();
+
+  const handleRowClick = (assessment) => {
+    setAssessmentData(assessment);
+    navigate('/result');
+  };
+
+  const dashboardAssessments = mockAssessments.slice(0, 2);
+
   return (
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
@@ -92,11 +97,15 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {recentAssessments.map((item) => (
-                <tr key={item.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-6 py-4 text-sm font-medium text-slate-900">{item.id}</td>
+              {dashboardAssessments.map((item) => (
+                <tr 
+                  key={item.id} 
+                  onClick={() => handleRowClick(item)}
+                  className="hover:bg-slate-50 transition-colors cursor-pointer group"
+                >
+                  <td className="px-6 py-4 text-sm font-medium text-emerald-600 group-hover:text-emerald-700">{item.id}</td>
                   <td className="px-6 py-4 text-sm text-slate-500">{item.date}</td>
-                  <td className="px-6 py-4 text-sm font-medium text-slate-700">{item.store}</td>
+                  <td className="px-6 py-4 text-sm font-medium text-slate-700">{item.storeName}</td>
                   <td className="px-6 py-4 text-sm text-slate-500">{item.location}</td>
                   <td className="px-6 py-4 text-sm">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
@@ -106,7 +115,7 @@ export default function Dashboard() {
                       {item.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-right font-medium text-slate-900">{item.amount}</td>
+                  <td className="px-6 py-4 text-sm text-right font-medium text-slate-900">{item.recommendedAmount}</td>
                 </tr>
               ))}
             </tbody>

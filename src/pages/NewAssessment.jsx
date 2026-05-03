@@ -2,49 +2,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAssessment } from '../context/AssessmentContext';
 import { UploadCloud, Zap, AlertTriangle, ShieldAlert } from 'lucide-react';
+import { demoCases } from '../data/mockAssessments';
 
 export default function NewAssessment() {
   const navigate = useNavigate();
   const { setAssessmentData } = useAssessment();
   const [source, setSource] = useState('field');
   const [loadedData, setLoadedData] = useState(null);
-
-  const demoCases = [
-    {
-      id: 'golden',
-      label: 'High Revenue Store',
-      icon: <Zap size={18} className="text-emerald-500" />,
-      data: {
-        imageUrl: 'https://i.postimg.cc/85PvXKt0/gol.jpg',
-        gps: '12.9716, 77.5946',
-        status: 'Approved',
-        type: 'golden'
-      }
-    },
-    {
-      id: 'sparse',
-      label: 'Sparse Inventory',
-      icon: <AlertTriangle size={18} className="text-amber-500" />,
-      data: {
-        imageUrl: 'https://i.postimg.cc/7YCWQXRZ/sparse.jpg',
-        gps: '13.0827, 80.2707',
-        status: 'Flagged',
-        type: 'sparse'
-      }
-    },
-    {
-      id: 'fraud',
-      label: 'Fraud Attempt',
-      icon: <ShieldAlert size={18} className="text-red-500" />,
-      data: {
-        imageUrl: 'https://i.postimg.cc/KjTs48BD/last.jpg',
-        gps: '40.7128, -74.0060',
-        warning: 'Needs Verification',
-        status: 'Flagged',
-        type: 'fraud'
-      }
-    }
-  ];
 
   const handleLoadDemo = (caseData) => {
     setLoadedData(caseData);
@@ -125,20 +89,28 @@ export default function NewAssessment() {
             </p>
             
             <div className="space-y-3">
-              {demoCases.map((caseItem) => (
-                <button
-                  key={caseItem.id}
-                  onClick={() => handleLoadDemo(caseItem.data)}
-                  className={`w-full flex items-center justify-between p-4 rounded-lg border transition-all ${
-                    loadedData?.type === caseItem.data.type
-                      ? 'border-emerald-500 bg-emerald-50 shadow-sm'
-                      : 'border-slate-200 bg-white hover:border-emerald-300 hover:shadow-sm'
-                  }`}
-                >
-                  <span className="font-medium text-slate-800">{caseItem.label}</span>
-                  {caseItem.icon}
-                </button>
-              ))}
+              {demoCases.map((caseItem) => {
+                const getIcon = () => {
+                  if (caseItem.id === 'golden') return <Zap size={18} className="text-emerald-500" />;
+                  if (caseItem.id === 'sparse') return <AlertTriangle size={18} className="text-amber-500" />;
+                  return <ShieldAlert size={18} className="text-red-500" />;
+                };
+
+                return (
+                  <button
+                    key={caseItem.id}
+                    onClick={() => handleLoadDemo(caseItem.data)}
+                    className={`w-full flex items-center justify-between p-4 rounded-lg border transition-all ${
+                      loadedData?.type === caseItem.data.type
+                        ? 'border-emerald-500 bg-emerald-50 shadow-sm'
+                        : 'border-slate-200 bg-white hover:border-emerald-300 hover:shadow-sm'
+                    }`}
+                  >
+                    <span className="font-medium text-slate-800">{caseItem.label}</span>
+                    {getIcon()}
+                  </button>
+                );
+              })}
             </div>
 
             <div className="mt-6 p-4 bg-slate-100 rounded-lg border border-slate-200">

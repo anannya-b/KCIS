@@ -113,7 +113,7 @@ export default function NewAssessment() {
                 : 'bg-slate-200 text-slate-400 cursor-not-allowed'
             }`}
           >
-            Run AI Underwriting Pipeline
+            Run AI
           </button>
         </div>
 

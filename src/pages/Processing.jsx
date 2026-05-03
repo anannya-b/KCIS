@@ -4,10 +4,10 @@ import { useAssessment } from '../context/AssessmentContext';
 
 const PIPELINE_STEPS = [
   { time: 0, text: '[SYSTEM] Extracting EXIF metadata and verifying device/timestamp authenticity...' },
-  { time: 3, text: '[VISION] Running VLM to compute Shelf Density Index and SKU Diversity Score...' },
-  { time: 6, text: '[GEO-SPATIAL] Querying 200m radius for Footfall POIs and Catchment Wealth Index...' },
-  { time: 9, text: '[SECURITY] Cross-referencing shadow angles and running adversarial duplication checks...' },
-  { time: 12, text: '[FUSION] Executing Economic Fusion Engine and calculating confidence intervals...' },
+  { time: 1.5, text: '[VISION] Running VLM to compute Shelf Density Index and SKU Diversity Score...' },
+  { time: 3.0, text: '[GEO-SPATIAL] Querying 200m radius for Footfall POIs and Catchment Wealth Index...' },
+  { time: 4.5, text: '[SECURITY] Cross-referencing shadow angles and running adversarial duplication checks...' },
+  { time: 6.0, text: '[FUSION] Executing Economic Fusion Engine and calculating confidence intervals...' },
 ];
 
 export default function Processing() {
@@ -23,7 +23,7 @@ export default function Processing() {
     }
 
     const startTime = Date.now();
-    const duration = 15000;
+    const duration = 8000;
     
     // Call backend API in the background while the UI plays out
     fetch('/api/assess', {

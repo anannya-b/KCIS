@@ -12,14 +12,13 @@ export default function Layout() {
     <div className="flex h-screen bg-slate-50 font-sans text-slate-800">
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-slate-200 flex flex-col shadow-sm">
-        <div className="p-6 border-b border-slate-100">
+        <div className="p-6 border-b border-slate-100 print:hidden">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded bg-emerald-600 flex items-center justify-center text-white font-bold">
               K
             </div>
             <h1 className="font-bold text-xl text-slate-900 tracking-tight">KCIS Portal</h1>
           </div>
-          <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">TenzorX Underwriting</p>
         </div>
 
         <nav className="flex-1 p-4 space-y-1">
